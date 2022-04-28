@@ -13,8 +13,8 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin ({
-      template: './src/index.html'
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
     }),
   ],
 
@@ -23,9 +23,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
-//   optimization: {
-//     runtimeChunk: 'single',
-//   }, 
+  //   optimization: {
+  //     runtimeChunk: 'single',
+  //   },
   module: {
     rules: [
       {
