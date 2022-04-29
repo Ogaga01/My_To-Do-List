@@ -1,5 +1,5 @@
 import './style.css';
-import ViewMore from './Images/view-more.png';
+import ViewMore from './images/view-more.png';
 import addNewTask from './addtask.js';
 import editTask from './edittask.js';
 import { setStorage, getStorage } from './localstorage.js';
