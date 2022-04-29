@@ -101,3 +101,15 @@ html {
 #input-task::placeholder {
   font-style: italic;
 }
+
+.button {
+  background-color: green;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #f90707;
+}
