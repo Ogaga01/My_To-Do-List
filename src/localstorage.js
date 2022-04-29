@@ -1,17 +1,17 @@
-import { deleteTask, editTask } from './index.js';
-
-const updateList = (update) => {
-  const selectItem = update.target;
-
-  if (selectItem.classList.contains('delete')) {
-    const item = selectItem.parentElement.parentElement.id;
-    deleteTask(item);
-  }
-
-  if (selectItem.classList.contains('edit')) {
-    const item = selectItem.parentElement.parentElement.id;
-    editTask(item);
-  }
-};
-
-export default updateList;
+const setStorage = (arr) => {
+    localStorage.setItem('stored-list', JSON.stringify(arr));
+  };
+  
+  const getStorage = () => {
+    const tasksList = [];
+    if (localStorage.getItem('stored-list')) {
+      const parsedList = JSON.parse(localStorage.getItem('stored-list'));
+      parsedList.forEach((element) => {
+        tasksList.push(element);
+      });
+    }
+    return tasksList;
+  };
+  
+  export { setStorage };
+  export { getStorage };
