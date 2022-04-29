@@ -6,11 +6,9 @@ import { setStorage, getStorage } from './localstorage.js';
 import Delete from './removetask.js';
 import completed from './clearall.js';
 
-
 const addTask = document.getElementById('add-new-task');
 const currentTasks = document.querySelector('.current-tasks');
 const clearCompleted = document.getElementById('completed');
-
 
 const tasks = getStorage();
 
@@ -20,13 +18,12 @@ const removeIndex = (index) => {
   populateTasks(getStorage()); // eslint-disable-line
 };
 
-
 // Delete all completed tasks from local storage
 
 clearCompleted.addEventListener('click', () => {
-    Delete.deleteAll(getStorage());
+  Delete.deleteAll(getStorage());
     populateTasks(getStorage()); // eslint-disable-line
-  });
+});
 
 const populateTasks = (arr) => {
   currentTasks.innerHTML = '';
@@ -50,9 +47,9 @@ const populateTasks = (arr) => {
 
     // Check which checkboxes are clicked.
     if (arr[i].completed === 'true') {
-        tick.checked = true;
-        newDiv.style.textDecoration = 'line-through';
-      }
+      tick.checked = true;
+      newDiv.style.textDecoration = 'line-through';
+    }
 
     // Double click the input area to display the delete icon
     description.addEventListener('dblclick', () => {
@@ -64,7 +61,7 @@ const populateTasks = (arr) => {
       });
     });
 
-      // Update task on clicking body
+    // Update task on clicking body
     document.body.addEventListener('click', (e) => {
       if (!newDiv.contains(e.target) && document.getElementById(`update${i}`)) {
         newDiv.classList.remove('edit-mode');
@@ -83,12 +80,10 @@ addTask.addEventListener('click', () => {
   populateTasks(addNewTask(getStorage()));
 });
 
-
 // call completed function to update task status
 document.body.addEventListener('change', () => {
-    completed(getStorage());
-  });
-  
+  completed(getStorage());
+});
 
 // Display tasks
 document.addEventListener('DOMContentLoaded', () => {
