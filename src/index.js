@@ -1,92 +1,68 @@
 import './style.css';
-import updateList from './localstorage.js';
+import ViewMore from './assets/view-more.png';
+import addNewTask from './add-task.js';
+import editTask from './edit-task.js';
+import { setStorage, getStorage } from './store-list.js';
+import Delete from './remove-task.js';
 
-const toDoList = document.getElementById('list-item');
-const addTask = document.getElementById('add-button');
-const addTaskInput = document.getElementById('add-task');
-let storedTasks = [];
-let editTaskItem = null;
+const addTask = document.getElementById('add-new-task');
+const currentTasks = document.querySelector('.current-tasks');
 
-const getTask = () => {
-  if (localStorage.getItem('tasks') === null) {
-    storedTasks = [];
-  } else {
-    storedTasks = JSON.parse(localStorage.getItem('tasks'));
+const tasks = getStorage();
+
+// Delete an item from local storage
+const removeIndex = (index) => {
+  setStorage(Delete.deleteOne(getStorage(), index));
+  populateTasks(getStorage()); // eslint-disable-line
+};
+
+const populateTasks = (arr) => {
+  currentTasks.innerHTML = '';
+  for (let i = 0; i <= arr.length; i += 1) {
+    // Add an item to local storage
+    const newDiv = document.createElement('div');
+    newDiv.className = 'to-do-item';
+    const tick = document.createElement('input');
+    const description = document.createElement('input');
+    description.className = 'task-description';
+    const menuImg = document.createElement('img');
+    menuImg.src = `${ViewMore}`;
+    tick.setAttribute('type', 'checkbox');
+    tick.id = `item${i}`;
+    newDiv.append(tick);
+    description.value = `${arr[i].description}`;
+    newDiv.append(description);
+    newDiv.append(menuImg);
+    currentTasks.appendChild(newDiv);
+
+    // Double click the input area to display the delete icon
+    description.addEventListener('dblclick', () => {
+      newDiv.classList.add('edit-mode');
+      newDiv.innerHTML = `<input type="checkbox" id="${i}"></input><input id = "update${i}" class="update" type="text" value = "${arr[i].description}"></input><i id="delete${i}" class="fas fa-trash-alt"></i>`;
+      document.getElementById(`update${i}`).focus();
+      document.getElementById(`delete${i}`).addEventListener('click', () => {
+        removeIndex(i);
+      });
+    });
+    document.body.addEventListener('click', (e) => {
+      // Update task on clicking body
+      if (!newDiv.contains(e.target) && document.getElementById(`update${i}`)) {
+        newDiv.classList.remove('edit-mode');
+        const arr = getStorage();
+        setStorage(editTask(arr, i));
+        populateTasks(editTask(arr, i));
+      }
+    });
   }
-
-  const taskSession = storedTasks.map((item, index) => `
-    <li class="task" id=${item}>
-    <div class="task-item">
-        <input type="checkbox" id=${index} ${item.completed ? 'checked' : ''}>
-        <label type= "text" id="${item.index}" for="${item.description}">${item.description}</label>
-    </div>
-    <i class="fa-solid fa-trash-can" id="${index}></i>
-    <i class="fa-solid fa-ellipsis-vertical" id="${index}></i>
-    </li>`).join('');
-
-  toDoList.innerHTML = taskSession;
+  setStorage(arr);
 };
 
-const saveTask = ({ index, description, completed = false }) => {
-  storedTasks = [];
-
-  if (localStorage.getItem('item') === null) {
-    storedTasks = [];
-  } else {
-    storedTasks = JSON.parse(localStorage.getItem('item'));
-  }
-
-  storedTasks.push({ index, description, completed });
-  localStorage.setItem('item', JSON.stringify(storedTasks));
-  getTask();
-};
-
-const saveEditTask = (item) => {
-  const taskItem = storedTasks[item];
-  taskItem.description = addTaskInput.value;
-  localStorage.setItem('item', JSON.stringify(storedTasks));
-};
-
-const resetList = (storedList) => storedList.forEach((taskItem, index) => {
-  taskItem.index = index;
+// Add new task
+addTask.addEventListener('click', () => {
+  populateTasks(addNewTask(getStorage()));
 });
 
-const deleteTask = (item) => {
-  const delItem = storedTasks[item];
-  storedTasks = storedTasks.filter((toDel) => toDel !== delItem);
-  resetList(storedTasks);
-  localStorage.setItem('item', JSON.stringify(storedTasks));
-};
-
-const editTask = (item) => {
-  editTaskItem = item;
-  const taskEdit = storedTasks[item];
-  addTaskInput.value = taskEdit.description;
-  addTaskInput.focus();
-};
-
-addTask.addEventListener('click', (addItem) => {
-  addItem.preventDefault();
-  if (!addTaskInput.value) return;
-
-  if (editTaskItem != null) {
-    saveEditTask(editTaskItem);
-    editTaskItem = null;
-  } else {
-    saveTask({ index: storedTasks.length, description: addTaskInput.value, completed: false });
-  }
-
-  getTask();
-  addTaskInput.value = '';
+// Display tasks
+document.addEventListener('DOMContentLoaded', () => {
+  populateTasks(tasks);
 });
-
-document.addEventListener('keydown', (press) => {
-  if (press.key === 'Enter' && addTaskInput.value) {
-    addTask.click();
-  }
-});
-
-document.addEventListener('DOMContentLoaded', getTask);
-toDoList.addEventListener('click', updateList);
-
-export { deleteTask, editTask };
