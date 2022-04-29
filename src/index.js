@@ -1,9 +1,9 @@
 import './style.css';
 import ViewMore from './assets/view-more.png';
-import addNewTask from './add-task.js';
-import editTask from './edit-task.js';
-import { setStorage, getStorage } from './store-list.js';
-import Delete from './remove-task.js';
+import addNewTask from './addtask.js';
+import editTask from './edittask.js';
+import { setStorage, getStorage } from './localstorage.js';
+import Delete from './removetask.js';
 
 const addTask = document.getElementById('add-new-task');
 const currentTasks = document.querySelector('.current-tasks');
