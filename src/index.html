@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do-List</title>
-</head>
-<body>
-    <section id="to-do-list">
-        <div id="title">
-            <h3 id="first-heading">Today's To Do</h3>
-            <i class="fa-solid fa-rotate"></i>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My To Do lists</title>
+    <script
+      src="https://kit.fontawesome.com/bc719f0ade.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="list-div">
+        <div class="title">
+          <h4>My To Do List</h4>
+          <i class="fa-solid fa-arrows-rotate refresh-icon"></i>
         </div>
-        <div id="add-list">
-            <input type="text" class="add-task" placeholder="Add to your list...">
-            <button type="submit" class="add-button" id="add-button">
-                <i class="fa-solid fa-circle-arrow-down"></i>
-            </button>
+        <div class="add-task">
+          <input
+            required
+            type="text"
+            placeholder="Add a task..."
+            id="input-task"
+            class="new-list-item"
+          /><i class="fa-solid fa-arrow-right-to-bracket" id="add-new-task"></i>
         </div>
-        <div id="display-list">
-            <ul id="list-item">
-
-            </ul>
-            <div class="button-container">
-                <button type="submit" class="button-clear">Clear all completed</button>
-            </div>
+        <div class="current-tasks"></div>
+        <div class="clear-content">
+          <span id="completed">Clear all completed</span>
         </div>
-
-    </section>
-
-
-
-
-
-    <script src="https://kit.fontawesome.com/4f7f93e0aa.js" crossorigin="anonymous"></script>
-</body>
+      </div>
+    </div>
+  </body>
 </html>
