@@ -2,7 +2,7 @@
 
 # My-To-Do-List
 
-> Building a to do list Web App
+> A typical To-do list website. It can additems to your list, edit the items, mark items as done and delete an item or all completed items.
 
 
 ## Built With
